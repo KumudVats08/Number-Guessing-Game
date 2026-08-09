@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Guessing Game</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <div class="background-doodles" aria-hidden="true">
+        <span class="doodle d1">+</span> <span class="doodle d2">✦</span> 
+        <span class="doodle d3">○</span> <span class="doodle d4">×</span> 
+        <span class="doodle d5">◇</span> <span class="doodle d6">+</span> 
+        <span class="doodle d7">✦</span> <span class="doodle d8">○</span>
+    </div>
+
+    <main class="game-container">
+        <h1>🎯 NUMBER GAME</h1>
+        <p>Guess a number between 1 and 100</p>
+
+
+        {% if "WON" not in message %}
+            <form method="POST" class="guess-form">
+                <!-- Added accessible label for screen readers -->
+                <label Aks for="guessInput" class="visually-hidden">Enter your guess:</label>
+                <input type="number" name="guess" id="guessInput" min="1" max="100" required>
+                <button type="submit">GUESS</button>
+            </form>
+        {% endif %}
+
+    
+        {% if message %}
+            <p class="game-message">{{ message }}</p>
+        {% endif %}
+
+        <p class="stats-text">Attempts used: <strong>{{ attempts }}</strong></p>
+
+        {% if hint %}
+            <p class="hint-text">💡 {{ hint }}</p>
+        {% endif %}
+
+        
+        {% if attempts >= 5 and not hint and "WON" not in message %}
+            <div class="hint-section">
+                <p>Need some help to keep going?</p>
+                <form action="/hint" method="POST">
+                    <button type="submit" class="btn-secondary">YES, GIVE ME A HINT</button>
+                </form>
+            </div>
+        {% endif %}
+
+
+        <form action="/reset" method="POST" class="reset-form">
+            <button type="submit" class="btn-danger">NEW GAME</button>
+        </form>
+    </main>
+
+    <script>
+        // Keep focus on input unless the game is already won
+        window.onload = function() {
+            const input = document.getElementById("guessInput");
+            if (input) input.focus();
+        };
+    </script>
+</body>
+</html>

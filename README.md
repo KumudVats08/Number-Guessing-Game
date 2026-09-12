@@ -39,7 +39,7 @@ To prevent server crashes caused by bad or empty user payloads, the backend hand
 1. **Clone the Repository:**
    ```bash
    git clone https://github.com
-   cd YOUR_REPO_NAME
+   cd Number-Guessing-Game
    ```
 
 2. **Set Up a Virtual Environment:**
